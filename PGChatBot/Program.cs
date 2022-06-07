@@ -53,3 +53,4 @@ var messagebox = driver.FindElement(By.Id("message-text"));
 
 messagebox.SendKeys(texts[Random.Shared.Next(0, texts.Length)]);
 messagebox.SendKeys(Keys.Enter);
+WriteLine("Done.");

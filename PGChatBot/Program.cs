@@ -10,7 +10,10 @@ var texts = new[]
 {
     "햄스터김치볶음",
     "$$볼보자동차",
-    "끼에에엑"
+    "끼에에엑",
+    "존프루시안테그는신인가",
+    "하이접니다",
+    "쵸닉"
 };
 
 var driverOptions = new ChromeOptions();

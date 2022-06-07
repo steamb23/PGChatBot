@@ -1,23 +1,31 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using PGChatBot;
 using static System.Console;
 using static System.Threading.Thread;
 
 const string userId = "steamb23@outlook.com";
 const string password = "~;5(Vg^t;X61r}D";
 const string uid = "487";
-var texts = new[]
+var texts = new WeightData<string>[]
 {
-    "햄스터김치볶음",
-    "$$볼보자동차",
-    "끼에에엑",
-    "존프루시안테그는신인가",
-    "하이접니다",
-    "초닠",
-    "존익",
-    "야레야레다제",
-    "https://media.githubusercontent.com/media/steamb23/PGChatBot/master/img/4eab27b42ba6da71.gif",
-    "https://youtu.be/miomuSGoPzI"
+    new(5, "햄스터김치볶음"),
+    new(1, "$$볼보자동차"),
+    new(1, "끼에에엑"),
+    new(1, "존프루시안테그는신인가"),
+    new(1, "하이접니다"),
+    new(2, "초닠"),
+    new(2, "존익"),
+    new(1, "야레야레다제"),
+};
+var links = new WeightData<LinkData>[]
+{
+    new(1, new("https://youtu.be/WQYN2P3E06s", "Christopher Tin - Sogno di Volare", "웅장한 음악", "문명 브금")),
+    new(1, new("https://youtu.be/-4788Tmz9Zo", "Beethoven - Symphony No. 7 - Iván Fischer", "웅장한 음악", "베토벤 교향곡")),
+    new(1, new("https://youtu.be/miomuSGoPzI", "치킨 어택")),
+    new(1, new("https://youtu.be/NUrjZ1UPWTE", "가시 참피", "고양이", "귀여움")),
+    new(0.5, new("https://youtu.be/gkTb9GP9lVI", "가시 참피", "고양이", "귀여움", "웅장한 음악", "문명 브금")),
+    new(0.5, new("https://youtu.be/dQw4w9WgXcQ", "가시 참피", "고양이", "귀여움", "웅장한 음악", "문명 브금"))
 };
 
 var driverOptions = new ChromeOptions();
@@ -41,13 +49,13 @@ Sleep(1000); // 갱신 대기
 // 마지막 채팅 체크
 WriteLine("Message duplicate test...");
 var chatMessages = driver.FindElements(By.ClassName("chatMessage"));
-var lastChatMessage = chatMessages.Last();
+var lastChatMessage = chatMessages.SkipLast(1).Last();
 var lastChatName = lastChatMessage.FindElement(By.ClassName("chatName"));
 if (lastChatName.GetAttribute("title") == uid)
 {
     var lastChatText = lastChatMessage.FindElement(By.ClassName("chatText"));
 
-    if (texts.Any(text => lastChatText.Text.Contains(text)))
+    if (texts.Any(text => lastChatText.Text.Contains(text.Value)))
     {
         WriteLine("Still the same message remains. Terminate jobs to avoid duplication.");
         return;
@@ -58,6 +66,15 @@ if (lastChatName.GetAttribute("title") == uid)
 WriteLine("MessageBox enter...");
 var messagebox = driver.FindElement(By.Id("message-text"));
 
-messagebox.SendKeys(texts[Random.Shared.Next(0, texts.Length)]);
+WriteLine("MessageBox enter...");
+var text = WeightData<string>.Random(texts);
+messagebox.SendKeys(text);
 messagebox.SendKeys(Keys.Enter);
+WriteLine(text);
+var link = WeightData<LinkData>.Random(links);
+var linkModifier = link.RandomModifier();
+var linkText = $"{linkModifier}{(string.IsNullOrEmpty(linkModifier) ? "" : " ")}{link.Link}";
+messagebox.SendKeys(linkText);
+messagebox.SendKeys(Keys.Enter);
+WriteLine(linkText);
 WriteLine("Done.");

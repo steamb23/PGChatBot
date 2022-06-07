@@ -13,7 +13,8 @@ var texts = new[]
     "끼에에엑",
     "존프루시안테그는신인가",
     "하이접니다",
-    "쵸닉"
+    "쵸닉",
+    "https://media.githubusercontent.com/media/steamb23/PGChatBot/master/img/4eab27b42ba6da71.gif"
 };
 
 var driverOptions = new ChromeOptions();

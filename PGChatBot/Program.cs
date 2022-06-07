@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using PGChatBot;
 using static System.Console;
 using static System.Threading.Thread;
@@ -49,28 +50,26 @@ Sleep(1000); // 갱신 대기
 // 마지막 채팅 체크
 WriteLine("Message duplicate test...");
 var chatMessages = driver.FindElements(By.ClassName("chatMessage"));
-var lastChatMessage = chatMessages.SkipLast(1).Last();
-var lastChatName = lastChatMessage.FindElement(By.ClassName("chatName"));
-if (lastChatName.GetAttribute("title") == uid)
+var lastChatMessages = chatMessages.TakeLast(10);
+if ((
+        from lastChatMessage in lastChatMessages
+        let lastChatName = lastChatMessage.FindElement(By.ClassName("chatName"))
+        where lastChatName.GetAttribute("title") == uid
+        select lastChatMessage.FindElement(By.ClassName("chatText")))
+    .Any(lastChatText => texts.Any(text => lastChatText.Text.Contains(text.Value))))
 {
-    var lastChatText = lastChatMessage.FindElement(By.ClassName("chatText"));
-
-    if (texts.Any(text => lastChatText.Text.Contains(text.Value)))
-    {
-        WriteLine("Still the same message remains. Terminate jobs to avoid duplication.");
-        return;
-    }
+    WriteLine("Still the same message remains. Terminate jobs to avoid duplication.");
+    return;
 }
 
 // 메시지 입력 테스트
 WriteLine("MessageBox enter...");
 var messagebox = driver.FindElement(By.Id("message-text"));
-
-WriteLine("MessageBox enter...");
 var text = WeightData<string>.Random(texts);
 var link = WeightData<string>.Random(links);
-var textResult = $"{text} {link}";
-messagebox.SendKeys(textResult);
+var textResult = $"{text}\n{link}";
+messagebox.SendKeys(text);
 messagebox.SendKeys(Keys.Enter);
-WriteLine(textResult);
+messagebox.SendKeys(link);
+messagebox.SendKeys(Keys.Enter);
 WriteLine("Done.");

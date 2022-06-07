@@ -10,7 +10,7 @@ const string uid = "487";
 var texts = new WeightData<string>[]
 {
     new(5, "햄스터김치볶음"),
-    new(1, "$$볼보자동차"),
+    new(1, "잘자보동포"),
     new(1, "끼에에엑"),
     new(1, "존프루시안테그는신인가"),
     new(1, "하이접니다"),
@@ -18,14 +18,14 @@ var texts = new WeightData<string>[]
     new(2, "존익"),
     new(1, "야레야레다제"),
 };
-var links = new WeightData<LinkData>[]
+var links = new WeightData<string>[]
 {
-    new(1, new("https://youtu.be/WQYN2P3E06s", "Christopher Tin - Sogno di Volare", "웅장한 음악", "문명 브금")),
-    new(1, new("https://youtu.be/-4788Tmz9Zo", "Beethoven - Symphony No. 7 - Iván Fischer", "웅장한 음악", "베토벤 교향곡")),
-    new(1, new("https://youtu.be/miomuSGoPzI", "치킨 어택")),
-    new(1, new("https://youtu.be/NUrjZ1UPWTE", "가시 참피", "고양이", "귀여움")),
-    new(0.5, new("https://youtu.be/gkTb9GP9lVI", "가시 참피", "고양이", "귀여움", "웅장한 음악", "문명 브금")),
-    new(0.5, new("https://youtu.be/dQw4w9WgXcQ", "가시 참피", "고양이", "귀여움", "웅장한 음악", "문명 브금"))
+    new(1, "https://youtu.be/WQYN2P3E06s"),
+    new(1, "https://youtu.be/-4788Tmz9Zo"),
+    new(1, "https://youtu.be/miomuSGoPzI"),
+    new(1, "https://youtu.be/NUrjZ1UPWTE"),
+    new(0.5, "https://youtu.be/gkTb9GP9lVI"),
+    new(0.5, "https://youtu.be/dQw4w9WgXcQ")
 };
 
 var driverOptions = new ChromeOptions();
@@ -68,10 +68,9 @@ var messagebox = driver.FindElement(By.Id("message-text"));
 
 WriteLine("MessageBox enter...");
 var text = WeightData<string>.Random(texts);
-var link = WeightData<LinkData>.Random(links);
-var linkModifier = link.RandomModifier();
-var linkText = $"{text} {linkModifier}{(string.IsNullOrEmpty(linkModifier) ? "" : " ")}{link.Link}";
-messagebox.SendKeys(linkText);
+var link = WeightData<string>.Random(links);
+var textResult = $"{text} {link}";
+messagebox.SendKeys(textResult);
 messagebox.SendKeys(Keys.Enter);
-WriteLine(linkText);
+WriteLine(textResult);
 WriteLine("Done.");

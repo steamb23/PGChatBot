@@ -68,12 +68,9 @@ var messagebox = driver.FindElement(By.Id("message-text"));
 
 WriteLine("MessageBox enter...");
 var text = WeightData<string>.Random(texts);
-messagebox.SendKeys(text);
-messagebox.SendKeys(Keys.Enter);
-WriteLine(text);
 var link = WeightData<LinkData>.Random(links);
 var linkModifier = link.RandomModifier();
-var linkText = $"추천할 영상은... {linkModifier}{(string.IsNullOrEmpty(linkModifier) ? "" : " ")}{link.Link}";
+var linkText = $"{text} {linkModifier}{(string.IsNullOrEmpty(linkModifier) ? "" : " ")}{link.Link}";
 messagebox.SendKeys(linkText);
 messagebox.SendKeys(Keys.Enter);
 WriteLine(linkText);

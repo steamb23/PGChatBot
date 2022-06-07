@@ -13,8 +13,10 @@ var texts = new[]
     "끼에에엑"
 };
 
+var driverOptions = new ChromeOptions();
+driverOptions.AddArguments("--headless");
 
-using var driver = new ChromeDriver()
+using var driver = new ChromeDriver(driverOptions)
 {
     Url = "https://chat.zniq.co/",
 };

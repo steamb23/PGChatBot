@@ -29,7 +29,7 @@ var loginPasswordInput = driver.FindElement(By.Id("login-password"));
 loginIdInput.SendKeys(userId);
 loginPasswordInput.SendKeys(password);
 loginPasswordInput.SendKeys(Keys.Enter);
-Sleep(100); // 갱신 대기
+Sleep(1000); // 갱신 대기
 
 // 마지막 채팅 체크
 WriteLine("Message duplicate test...");

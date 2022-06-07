@@ -3,7 +3,6 @@ using OpenQA.Selenium.Chrome;
 using static System.Console;
 using static System.Threading.Thread;
 
-const string url = "https://chat.zniq.co/";
 const string userId = "steamb23@outlook.com";
 const string password = "~;5(Vg^t;X61r}D";
 const string uid = "487";
@@ -26,16 +25,11 @@ driverOptions.AddArguments("--headless");
 
 using var driver = new ChromeDriver(driverOptions)
 {
-    Url = "https://www.youtube.com/",
+    Url = "https://chat.zniq.co/",
 };
-// 유튜브 추천 목록 불러오기 ytd-rich-item-renderer tag
-Sleep(5000);
-var youtubeItem = driver.FindElement(By.TagName("ytd-rich-item-renderer"));
-var youtubeLink = "https://www.youtube.com/" + youtubeItem.FindElement(By.TagName("a")).GetAttribute("href");
-
 
 // 로그인
-WriteLine("PGMChat Login...");
+WriteLine("Login...");
 var loginIdInput = driver.FindElement(By.Id("login-id"));
 var loginPasswordInput = driver.FindElement(By.Id("login-password"));
 
@@ -65,7 +59,5 @@ WriteLine("MessageBox enter...");
 var messagebox = driver.FindElement(By.Id("message-text"));
 
 messagebox.SendKeys(texts[Random.Shared.Next(0, texts.Length)]);
-messagebox.SendKeys(Keys.Enter);
-messagebox.SendKeys(youtubeLink);
 messagebox.SendKeys(Keys.Enter);
 WriteLine("Done.");

@@ -19,4 +19,4 @@ jobs:
     - name: Build
       run: dotnet build --no-restore
     - name: Run
-      run: dotnet run --no-build --verbosity normal
+      run: dotnet run --project PGChatBot --no-build --verbosity normal

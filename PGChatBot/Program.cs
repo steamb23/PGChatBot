@@ -26,7 +26,8 @@ var links = new WeightData<string>[]
     new(1, "https://youtu.be/miomuSGoPzI"),
     new(1, "https://youtu.be/NUrjZ1UPWTE"),
     new(0.5, "https://youtu.be/gkTb9GP9lVI"),
-    new(0.5, "https://youtu.be/dQw4w9WgXcQ")
+    new(0.5, "https://youtu.be/dQw4w9WgXcQ"),
+    new(0.1, "https://youtu.be/XD8dCrpR-D0")
 };
 
 var driverOptions = new ChromeOptions();

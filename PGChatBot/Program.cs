@@ -51,7 +51,7 @@ Sleep(1000); // 갱신 대기
 // 마지막 채팅 체크
 WriteLine("Message duplicate test...");
 var chatMessages = driver.FindElements(By.ClassName("chatMessage"));
-var lastChatMessages = chatMessages.TakeLast(10);
+var lastChatMessages = chatMessages.TakeLast(20);
 if ((
         from lastChatMessage in lastChatMessages
         let lastChatName = lastChatMessage.FindElement(By.ClassName("chatName"))
